@@ -536,24 +536,24 @@
 
         <div class="card-thumb">
           <div class="play-btn"><div class="play-tri"></div></div>
-          <span class="card-views">5.0M views</span>
+          <span class="card-views" id="views-himym-main">5.0M views</span>
         </div>
         <div class="card-body">
           <div class="card-tag">HIMYM</div>
           <div class="card-title">How I Met Your Mother Finale — Deleted Scenes</div>
-          <div class="card-meta">Feb 2019 &nbsp;&bull;&nbsp; 93K likes</div>
+          <div class="card-meta">Feb 2019 &nbsp;&bull;&nbsp; <span id="likes-himym-main">93K likes</span></div>
         </div>
       </a>
       <div class="small-cards">
         <a href="https://www.youtube.com/watch?v=jrOMtXMMXQE" target="_blank" rel="noopener" class="small-card">
           <div class="card-tag">Bollywood</div>
           <div class="card-title">Imraan's poems — ZNMD</div>
-          <div class="card-meta">1.3M views</div>
+          <div class="card-meta"><span id="views-znmd">1.3M views</span></div>
         </a>
         <a href="https://www.youtube.com/watch?v=-AbBrpk-UcA" target="_blank" rel="noopener" class="small-card">
           <div class="card-tag">HIMYM</div>
           <div class="card-title">Ted & Robin — deleted lunch scene</div>
-          <div class="card-meta">1.1M views</div>
+          <div class="card-meta"><span id="views-ted-robin">1.1M views</span></div>
         </a>
       </div>
     </div>
@@ -604,7 +604,7 @@
         <div class="video-info">
           <div class="card-tag">Bollywood</div>
           <div class="video-title">Rang De Basanti — Lakshman Pandey & Ram Prasad Bismil</div>
-          <div class="video-meta">103K views &nbsp;&bull;&nbsp; Jan 2020</div>
+          <div class="video-meta"><span id="views-rdb">103K views</span> &nbsp;&bull;&nbsp; Jan 2020</div>
         </div>
       </div>
     </div>
@@ -630,7 +630,7 @@
         <div class="article-num">02</div>
         <div class="article-tag">Bollywood</div>
         <div class="article-title">Imraan's poems from ZNMD — full text and what they really mean</div>
-        <div class="article-excerpt">Farhan Akhtar wrote words that a whole generation carried with them. Here they are, in full, with everything they carry.</div>
+        <div class="article-excerpt">Javed Akhtar wrote words that a whole generation carried with them. Here they are, in full, with everything they carry.</div>
       </a>
       <a href="la-la-land-mia-sebastian.html" class="article-card">
         <div class="article-num">03</div>
@@ -649,10 +649,57 @@
     <ul class="footer-links">
       <li><a href="https://www.youtube.com/@SahebjitChhabra" target="_blank">YouTube</a></li>
       <li><a href="https://instagram.com/lostintrovert" target="_blank">Instagram</a></li>
+      <li><a href="https://instagram.com/sahebchh" target="_blank">Personal</a></li>
+      <li><a href="https://x.com/lostintrovert_" target="_blank">X</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="footer-note">for those who feel too much &nbsp;&bull;&nbsp; 2026</div>
   </footer>
 
 </body>
+
+<script>
+const API_KEY = 'AIzaSyCK09rTn7IBg9GZCvkuYKWZALYhBM0jBA0';
+
+const videos = [
+  { id: 'WS0xaSTvPQw', viewEl: 'views-himym-main', likeEl: 'likes-himym-main' },
+  { id: 'jrOMtXMMXQE', viewEl: 'views-znmd', likeEl: null },
+  { id: '-AbBrpk-UcA', viewEl: 'views-ted-robin', likeEl: null },
+  { id: 'FsPRKPPkZWc', viewEl: 'views-rdb', likeEl: null },
+];
+
+function formatCount(n) {
+  n = parseInt(n);
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(0) + 'K';
+  return n.toString();
+}
+
+async function fetchCounts() {
+  const ids = videos.map(v => v.id).join(',');
+  try {
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids}&key=${API_KEY}`);
+    const data = await res.json();
+    if (!data.items) return;
+    data.items.forEach(item => {
+      const video = videos.find(v => v.id === item.id);
+      if (!video) return;
+      const views = formatCount(item.statistics.viewCount);
+      const likes = item.statistics.likeCount ? formatCount(item.statistics.likeCount) : null;
+      if (video.viewEl) {
+        const el = document.getElementById(video.viewEl);
+        if (el) el.textContent = views + ' views';
+      }
+      if (video.likeEl && likes) {
+        const el = document.getElementById(video.likeEl);
+        if (el) el.textContent = likes + ' likes';
+      }
+    });
+  } catch(e) {
+    console.log('Could not fetch YouTube stats', e);
+  }
+}
+
+fetchCounts();
+</script>
 </html>
