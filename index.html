@@ -508,6 +508,7 @@
     }
   </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9341554205847657" crossorigin="anonymous"></script>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 
@@ -583,23 +584,21 @@
       <div>
         <div class="video-embed">
           <iframe src="https://www.youtube.com/embed/WS0xaSTvPQw" title="How I Met Your Mother Finale Deleted Scenes" allowfullscreen loading="lazy"></iframe>
-
         </div>
         <div class="video-info">
           <div class="card-tag">HIMYM</div>
           <div class="video-title">How I Met Your Mother Finale Deleted Scenes</div>
-          <div class="video-meta">5.0M views &nbsp;&bull;&nbsp; Feb 2019</div>
+          <div class="video-meta"><span id="views-himym-vid">5.0M views</span> &nbsp;&bull;&nbsp; Feb 2019</div>
         </div>
       </div>
       <div>
         <div class="video-embed">
           <iframe src="https://www.youtube.com/embed/jrOMtXMMXQE" title="Zindagi Na Milegi Dobara — Imraan's poems" allowfullscreen loading="lazy"></iframe>
-          <!-- TODO: Replace gRm57IRiCwM with correct ZNMD video ID from your YouTube -->
         </div>
         <div class="video-info">
           <div class="card-tag">Bollywood</div>
           <div class="video-title">Zindagi Na Milegi Dobara — Imraan's poems</div>
-          <div class="video-meta">1.3M views &nbsp;&bull;&nbsp; Oct 2019</div>
+          <div class="video-meta"><span id="views-znmd-vid">1.3M views</span> &nbsp;&bull;&nbsp; Oct 2019</div>
         </div>
       </div>
       <div>
@@ -609,7 +608,7 @@
         <div class="video-info">
           <div class="card-tag">HIMYM</div>
           <div class="video-title">Ted & Robin — Deleted Lunch Scene from the Finale</div>
-          <div class="video-meta">1.1M views &nbsp;&bull;&nbsp; Jan 2019</div>
+          <div class="video-meta"><span id="views-ted-vid">1.1M views</span> &nbsp;&bull;&nbsp; Jan 2019</div>
         </div>
       </div>
       <div>
@@ -619,7 +618,47 @@
         <div class="video-info">
           <div class="card-tag">Bollywood</div>
           <div class="video-title">Rang De Basanti — Lakshman Pandey & Ram Prasad Bismil</div>
-          <div class="video-meta"><span id="views-rdb">103K views</span> &nbsp;&bull;&nbsp; Jan 2020</div>
+          <div class="video-meta"><span id="views-rdb-vid">103K views</span> &nbsp;&bull;&nbsp; Jan 2020</div>
+        </div>
+      </div>
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/KPls7h_iaFg" title="FRIENDS The Stuff You've Never Seen" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="card-tag">Friends</div>
+          <div class="video-title">FRIENDS: The Stuff You've Never Seen — Conan O'Brien Special</div>
+          <div class="video-meta"><span id="views-friends-vid">240K views</span> &nbsp;&bull;&nbsp; Mar 2020</div>
+        </div>
+      </div>
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/VMqLZIeI870" title="Tamasha — All I Want — Ved and Tara" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="card-tag">Bollywood</div>
+          <div class="video-title">Tamasha — All I Want — Ved and Tara</div>
+          <div class="video-meta"><span id="views-tamasha-vid">7.4K views</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/Pg4Y9JXXhL0" title="La La Land — The Night We Met — Mia and Sebastian" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="card-tag">Cinema</div>
+          <div class="video-title">La La Land — The Night We Met — Mia and Sebastian</div>
+          <div class="video-meta"><span id="views-lalaland-vid">—</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/KmK-8mzendI" title="WHY SUPERMAN IS UNIQUE — Kill Bill Vol 2" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-info">
+          <div class="card-tag">Cinema</div>
+          <div class="video-title">Why Superman Is Unique — Kill Bill Vol. 2</div>
+          <div class="video-meta"><span id="views-killbill-vid">885 views</span></div>
         </div>
       </div>
     </div>
@@ -714,9 +753,17 @@ const API_KEY = 'AIzaSyCK09rTn7IBg9GZCvkuYKWZALYhBM0jBA0';
 
 const videos = [
   { id: 'WS0xaSTvPQw', viewEl: 'views-himym-main', likeEl: 'likes-himym-main' },
+  { id: 'WS0xaSTvPQw', viewEl: 'views-himym-vid', likeEl: null },
   { id: 'jrOMtXMMXQE', viewEl: 'views-znmd', likeEl: null },
+  { id: 'jrOMtXMMXQE', viewEl: 'views-znmd-vid', likeEl: null },
   { id: '-AbBrpk-UcA', viewEl: 'views-ted-robin', likeEl: null },
+  { id: '-AbBrpk-UcA', viewEl: 'views-ted-vid', likeEl: null },
   { id: 'FsPRKPPkZWc', viewEl: 'views-rdb', likeEl: null },
+  { id: 'FsPRKPPkZWc', viewEl: 'views-rdb-vid', likeEl: null },
+  { id: 'KPls7h_iaFg', viewEl: 'views-friends-vid', likeEl: null },
+  { id: 'VMqLZIeI870', viewEl: 'views-tamasha-vid', likeEl: null },
+  { id: 'Pg4Y9JXXhL0', viewEl: 'views-lalaland-vid', likeEl: null },
+  { id: 'KmK-8mzendI', viewEl: 'views-killbill-vid', likeEl: null },
 ];
 
 function formatCount(n) {
@@ -727,24 +774,25 @@ function formatCount(n) {
 }
 
 async function fetchCounts() {
-  const ids = videos.map(v => v.id).join(',');
+  const uniqueIds = [...new Set(videos.map(v => v.id))].join(',');
   try {
-    const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${ids}&key=${API_KEY}`);
+    const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${uniqueIds}&key=${API_KEY}`);
     const data = await res.json();
     if (!data.items) return;
     data.items.forEach(item => {
-      const video = videos.find(v => v.id === item.id);
-      if (!video) return;
-      const views = formatCount(item.statistics.viewCount);
-      const likes = item.statistics.likeCount ? formatCount(item.statistics.likeCount) : null;
-      if (video.viewEl) {
-        const el = document.getElementById(video.viewEl);
-        if (el) el.textContent = views + ' views';
-      }
-      if (video.likeEl && likes) {
-        const el = document.getElementById(video.likeEl);
-        if (el) el.textContent = likes + ' likes';
-      }
+      const matchingVideos = videos.filter(v => v.id === item.id);
+      matchingVideos.forEach(video => {
+        const views = formatCount(item.statistics.viewCount);
+        const likes = item.statistics.likeCount ? formatCount(item.statistics.likeCount) : null;
+        if (video.viewEl) {
+          const el = document.getElementById(video.viewEl);
+          if (el) el.textContent = views + ' views';
+        }
+        if (video.likeEl && likes) {
+          const el = document.getElementById(video.likeEl);
+          if (el) el.textContent = likes + ' likes';
+        }
+      });
     });
   } catch(e) {
     console.log('Could not fetch YouTube stats', e);
