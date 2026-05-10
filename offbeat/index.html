@@ -262,6 +262,16 @@ body{
   opacity:0.72;
   transform:translateZ(16px);
 }
+.ice-photo{
+  position:absolute;inset:-2%;
+  pointer-events:none;
+  background-image:url("ice-texture.png");
+  background-size:cover;
+  background-repeat:no-repeat;
+  opacity:0.9;
+  filter:saturate(0.92) contrast(1.04) brightness(1.02);
+  transform:translateZ(6px) scale(1.03);
+}
 .ice-blocks{
   position:absolute;inset:0;
   pointer-events:none;
@@ -840,11 +850,16 @@ function initOverlay(overlay) {
   function build() {
     Array.from(overlay.children).forEach(function(c) { c.remove(); });
     overlay.style.background =
-      'radial-gradient(circle at 50% 50%,rgba(180,219,247,0.06) 0%,rgba(180,219,247,0.03) 38%,rgba(112,170,219,0.08) 100%),' +
-      'linear-gradient(155deg,rgba(235,246,255,0.22) 0%,rgba(176,214,244,0.1) 26%,rgba(92,148,194,0.18) 78%,rgba(58,101,142,0.24) 100%),' +
-      'rgba(155,205,240,0.16)';
-    overlay.style.backdropFilter = 'blur(7px) brightness(1.02) saturate(1.04) contrast(1.03)';
-    overlay.style.webkitBackdropFilter = 'blur(7px) brightness(1.02) saturate(1.04) contrast(1.03)';
+      'linear-gradient(180deg,rgba(240,248,255,0.18),rgba(188,221,247,0.08) 44%,rgba(92,145,193,0.16) 100%),' +
+      'rgba(158,205,238,0.12)';
+    overlay.style.backdropFilter = 'blur(4px) brightness(1.01) saturate(1.02)';
+    overlay.style.webkitBackdropFilter = 'blur(4px) brightness(1.01) saturate(1.02)';
+
+    var photoDiv = document.createElement('div');
+    photoDiv.className = 'ice-photo';
+    var positions = ['20% 45%','52% 42%','28% 68%','58% 64%','82% 60%'];
+    photoDiv.style.backgroundPosition = positions[parseInt(overlay.dataset.i || '0', 10)] || 'center';
+    overlay.appendChild(photoDiv);
 
     var cloudDiv = document.createElement('div');
     cloudDiv.className = 'ice-frost-cloud';
@@ -853,24 +868,6 @@ function initOverlay(overlay) {
     var depthDiv = document.createElement('div');
     depthDiv.className = 'ice-depth';
     overlay.appendChild(depthDiv);
-
-    var blockDepthDiv = document.createElement('div');
-    blockDepthDiv.className = 'ice-block-depth';
-    overlay.appendChild(blockDepthDiv);
-
-    var noiseDiv = document.createElement('div');
-    noiseDiv.style.cssText = 'position:absolute;inset:0;pointer-events:none;opacity:0.14;background:url("' + noiseUrl + '") repeat;mix-blend-mode:soft-light;';
-    overlay.appendChild(noiseDiv);
-
-    var blocksDiv = document.createElement('div');
-    blocksDiv.className = 'ice-blocks';
-    blocksDiv.style.backgroundImage = 'url("' + makeBlockSvg(section.offsetWidth || 320, section.offsetHeight || 220) + '")';
-    overlay.appendChild(blocksDiv);
-
-    var inclusionDiv = document.createElement('div');
-    inclusionDiv.className = 'ice-inclusions';
-    inclusionDiv.style.backgroundImage = 'url("' + makeInclusionSvg(section.offsetWidth || 320, section.offsetHeight || 220) + '")';
-    overlay.appendChild(inclusionDiv);
 
     var edgeDiv = document.createElement('div');
     edgeDiv.className = 'ice-edge-frost';
@@ -891,11 +888,6 @@ function initOverlay(overlay) {
     var causticDiv = document.createElement('div');
     causticDiv.className = 'ice-caustic';
     overlay.appendChild(causticDiv);
-
-    var cracksDiv = document.createElement('div');
-    cracksDiv.className = 'ice-cracks';
-    cracksDiv.style.background = 'center/cover no-repeat url("' + makeCrackSvg(section.offsetWidth || 320, section.offsetHeight || 220) + '")';
-    overlay.appendChild(cracksDiv);
 
     if (label) {
       var fs = Math.min((section.offsetWidth || 300) / label.length * 1.6, 82);
