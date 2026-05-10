@@ -226,7 +226,7 @@ body{
 .work-link:hover{color:rgba(110,185,235,1)}
 
 /* NUMBERS */
-.nums{display:grid;grid-template-columns:1fr;gap:16px}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .num-v{
   font-family:'Space Mono',monospace;
   font-size:clamp(24px,2.6vw,36px);font-weight:700;
@@ -281,7 +281,7 @@ body{
     <img src="Photo.png" alt="Sahebjit" class="who-photo">
     <h1 class="who-name">Sahebjit Singh Chhabra</h1>
     <p class="who-tag">I can't be put in a box... except this one.</p>
-    <p class="who-tag">Head of Operations & Finance. Creator. CS grad.</p>
+    <p class="who-tag">Creator. Head of Operations & Finance. CS grad.</p>
   </div>
   <div class="ice-overlay" data-i="0" data-lbl="WHO"></div>
 </section>
@@ -293,7 +293,7 @@ body{
     <div class="work-grid">
       <div class="work-card">
         <div class="work-name">IJS Electronics</div>
-        <p class="work-sub">Emergency warning systems for India's most critical convoys and agencies.</p>
+        <p class="work-sub">Head of Operations & Finance. Drove 40% turnover increase. SQL forecasting cut stock delays 30%. Managed plant relocations, GeM OEM verification, and Auto Expo 2025.</p>
         <div class="tags">
           <span class="tag">President's Escort Fleet</span>
           <span class="tag">PM Convoy</span>
@@ -302,8 +302,6 @@ body{
           <span class="tag">13+ Police Forces</span>
           <span class="tag">OEM Maruti</span>
           <span class="tag">40% Turnover</span>
-          <span class="tag">SQL Forecasting</span>
-          <span class="tag">30% Delay Reduction</span>
         </div>
       </div>
       <div class="work-card">
@@ -335,13 +333,13 @@ body{
     <div class="lbl">ACHIEVEMENTS</div>
     <ul class="ach-list">
       <li class="ach-item"><span class="ach-n">01</span><span class="ach-t">World Topper — Cambridge AS Mathematics (Times of India)</span></li>
-      <li class="ach-item"><span class="ach-n">02</span><span class="ach-t">Rank 1 of 5241 — Decryptonite</span></li>
-      <li class="ach-item"><span class="ach-n">03</span><span class="ach-t">1st Place — Digital Imaging Cofas Olympiad</span></li>
-      <li class="ach-item"><span class="ach-n">04</span><span class="ach-t">Google Office Visit — 1 of 90 selected</span></li>
-      <li class="ach-item"><span class="ach-n">05</span><span class="ach-t">INSPIRE Scholar — top 1%, Delhi</span></li>
-      <li class="ach-item"><span class="ach-n">06</span><span class="ach-t">McKinsey Forward Program</span></li>
-      <li class="ach-item"><span class="ach-n">07</span><span class="ach-t">ACT 33/36 — perfect Math score</span></li>
-      <li class="ach-item"><span class="ach-n">08</span><span class="ach-t">Rang De Basanti edit — actor Atul Kulkarni turned it into a collaboration (100K+ views)</span></li>
+      <li class="ach-item"><span class="ach-n">02</span><span class="ach-t">Rang De Basanti edit — actor Atul Kulkarni turned it into a collaboration (100K+ views)</span></li>
+      <li class="ach-item"><span class="ach-n">03</span><span class="ach-t">Rank 1 of 5241 — Decryptonite</span></li>
+      <li class="ach-item"><span class="ach-n">04</span><span class="ach-t">Google Office Visit — 1 of 90 selected across India</span></li>
+      <li class="ach-item"><span class="ach-n">05</span><span class="ach-t">ACT 33/36 — perfect 36 in Math</span></li>
+      <li class="ach-item"><span class="ach-n">06</span><span class="ach-t">GMAT Focus — Verbal Reasoning 99th percentile, Critical Reasoning 100th percentile</span></li>
+      <li class="ach-item"><span class="ach-n">07</span><span class="ach-t">8.3M+ YouTube views across film edits and cultural content</span></li>
+      <li class="ach-item"><span class="ach-n">08</span><span class="ach-t">Built lostintrovert.com and grandwarninglights.in — design to deployment</span></li>
     </ul>
   </div>
   <div class="ice-overlay" data-i="3" data-lbl="ACHIEVEMENTS"></div>
@@ -438,6 +436,12 @@ function drawIce(canvas, label) {
     ctx.fillRect(0, 0, w, h);
   }
 
+  const bevel = ctx.createLinearGradient(0, 0, w * 0.6, h * 0.6);
+  bevel.addColorStop(0, 'rgba(255,255,255,0.22)');
+  bevel.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = bevel;
+  ctx.fillRect(0, 0, w, h);
+
   for (let i = 0; i < 55; i++) {
     ctx.strokeStyle = 'rgba(190,232,255,' + (0.12 + Math.random() * 0.33) + ')';
     ctx.lineWidth = 0.3 + Math.random() * 1.9;
@@ -468,9 +472,51 @@ function drawIce(canvas, label) {
   ctx.fillStyle = sheen;
   ctx.fillRect(0, 0, w, h);
 
+  for (let i = 0; i < 8; i++) {
+    ctx.strokeStyle = 'rgba(190,232,255,' + (0.5 + Math.random() * 0.2) + ')';
+    ctx.lineWidth = 2.5 + Math.random() * 2;
+    ctx.beginPath();
+    let px = w / 2 + (Math.random() - 0.5) * 60;
+    let py = h / 2 + (Math.random() - 0.5) * 60;
+    ctx.moveTo(px, py);
+    const segs = 3 + Math.floor(Math.random() * 3);
+    for (let s = 0; s < segs; s++) {
+      px += (Math.random() - 0.5) * 120;
+      py += (Math.random() - 0.5) * 120;
+      ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+  }
+
+  const fTop = ctx.createLinearGradient(0, 0, 0, 18);
+  fTop.addColorStop(0, 'rgba(255,255,255,0.3)');
+  fTop.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = fTop; ctx.fillRect(0, 0, w, 18);
+  const fBot = ctx.createLinearGradient(0, h, 0, h - 18);
+  fBot.addColorStop(0, 'rgba(255,255,255,0.3)');
+  fBot.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = fBot; ctx.fillRect(0, h - 18, w, 18);
+  const fLeft = ctx.createLinearGradient(0, 0, 18, 0);
+  fLeft.addColorStop(0, 'rgba(255,255,255,0.3)');
+  fLeft.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = fLeft; ctx.fillRect(0, 0, 18, h);
+  const fRight = ctx.createLinearGradient(w, 0, w - 18, 0);
+  fRight.addColorStop(0, 'rgba(255,255,255,0.3)');
+  fRight.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = fRight; ctx.fillRect(w - 18, 0, 18, h);
+
+  const cTL = ctx.createRadialGradient(0, 0, 0, 0, 0, Math.max(w, h) * 0.6);
+  cTL.addColorStop(0, 'rgba(100,200,220,0.12)');
+  cTL.addColorStop(1, 'rgba(100,200,220,0)');
+  ctx.fillStyle = cTL; ctx.fillRect(0, 0, w, h);
+  const cBR = ctx.createRadialGradient(w, h, 0, w, h, Math.max(w, h) * 0.6);
+  cBR.addColorStop(0, 'rgba(80,140,220,0.12)');
+  cBR.addColorStop(1, 'rgba(80,140,220,0)');
+  ctx.fillStyle = cBR; ctx.fillRect(0, 0, w, h);
+
   if (label) {
     ctx.save();
-    ctx.globalAlpha = 0.06;
+    ctx.globalAlpha = 0.12;
     ctx.fillStyle = '#fff';
     const fs = Math.min(w / label.length * 1.6, 82);
     ctx.font = 'bold ' + fs + 'px "DM Sans", sans-serif';
@@ -480,8 +526,8 @@ function drawIce(canvas, label) {
     ctx.restore();
   }
 
-  ctx.fillStyle = 'rgba(255,255,255,0.28)';
-  ctx.font = '11px "Space Mono", monospace';
+  ctx.fillStyle = 'rgba(255,255,255,0.75)';
+  ctx.font = '13px "Space Mono", monospace';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('CLICK TO BREAK', w / 2, h / 2 + (label ? 26 : 0));
