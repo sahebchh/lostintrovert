@@ -55,7 +55,7 @@ body{
 
 /* NUKE BUTTON */
 #nuke{
-  position:fixed;bottom:28px;left:50%;
+  position:fixed;bottom:16px;left:50%;
   transform:translateX(-50%);
   border:2px solid rgba(255,70,20,0.95);
   color:rgba(255,150,70,1);
@@ -124,7 +124,7 @@ body{
   position:fixed;top:18px;left:50%;
   transform:translateX(-50%);
   font-family:'Space Mono',monospace;
-  font-size:10px;letter-spacing:0.3em;
+  font-size:12px;letter-spacing:0.3em;
   color:rgba(255,255,255,0.48);
   z-index:100;pointer-events:none;
   white-space:nowrap;
@@ -134,8 +134,8 @@ body{
 #breaking-ice{
   position:fixed;top:18px;left:20px;
   font-family:'Space Mono',monospace;
-  font-size:10px;letter-spacing:0.25em;
-  color:rgba(255,255,255,0.35);
+  font-size:13px;letter-spacing:0.25em;
+  color:rgba(255,255,255,0.5);
   z-index:100;pointer-events:none;
   text-transform:lowercase;
 }
@@ -148,7 +148,7 @@ body{
   gap:10px;
   max-width:1080px;
   margin:0 auto;
-  padding:52px 24px 40px;
+  padding:52px 24px 100px;
   min-height:100vh;
   align-content:center;
 }
@@ -175,7 +175,7 @@ body{
 .lbl{
   font-family:'Space Mono',monospace;
   font-size:9px;letter-spacing:0.38em;
-  color:var(--ice4);
+  color:rgba(110,185,235,0.7);
   margin-bottom:18px;
   text-transform:uppercase;
 }
@@ -200,15 +200,15 @@ body{
 .who-name{
   font-size:clamp(18px,1.85vw,26px);
   font-weight:500;letter-spacing:-0.02em;
-  color:#f2f2f2;line-height:1.2;margin-bottom:8px;
+  color:#ffffff;line-height:1.2;margin-bottom:8px;
 }
-.who-tag{font-size:14px;color:var(--muted);font-weight:300;font-style:italic}
+.who-tag{font-size:14px;color:rgba(255,255,255,0.65);font-weight:300;font-style:italic}
 
 /* WORK */
 .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .work-card{border-left:1px solid var(--ice2);padding-left:16px}
-.work-name{font-size:15px;font-weight:500;color:#e8e8e8;margin-bottom:6px}
-.work-sub{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:12px}
+.work-name{font-size:15px;font-weight:500;color:#ffffff;margin-bottom:6px}
+.work-sub{font-size:12px;color:rgba(255,255,255,0.75);line-height:1.65;margin-bottom:12px}
 .tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
 .tag{
   font-family:'Space Mono',monospace;font-size:9px;
@@ -232,7 +232,7 @@ body{
   font-size:clamp(24px,2.6vw,36px);font-weight:700;
   color:rgba(110,185,235,1);line-height:1;margin-bottom:4px;
 }
-.num-l{font-size:11px;color:var(--muted);font-weight:300;line-height:1.4}
+.num-l{font-size:11px;color:rgba(255,255,255,0.65);font-weight:300;line-height:1.4}
 
 /* ACHIEVEMENTS */
 .ach-list{list-style:none;display:grid;gap:12px}
@@ -241,7 +241,7 @@ body{
   font-family:'Space Mono',monospace;font-size:9px;
   color:rgba(110,185,235,0.6);flex-shrink:0;width:18px;
 }
-.ach-t{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5}
+.ach-t{font-size:13px;color:rgba(255,255,255,0.92);line-height:1.5}
 
 /* FIND ME */
 .links{display:grid;gap:12px}
@@ -266,9 +266,8 @@ body{
 <div id="cursor">⛏️</div>
 <div id="prog"></div>
 <div id="breaking-ice">breaking the ice</div>
-<button id="nuke">🔥 PRESS IF YOU'RE OFFBEAT TOO</button>
-<a id="resume-btn" href="resume.pdf" target="_blank" rel="noopener">resume ↓</a>
-<audio id="audio-main" src="Nachde Ne Saare.m4a" loop></audio>
+<button id="nuke">🔥 PRESS IF YOU'RE OFFBEAT TOO<br><span style="font-size:10px;opacity:0.5;letter-spacing:0.15em;text-transform:lowercase">melts all ice</span></button>
+<audio id="audio-main" src="Nachde Ne Saare.m4a"></audio>
 <audio id="audio-offbeat" src="offbeat 2nd.m4a"></audio>
 <audio id="audio-viral" src="viral tweet.m4a"></audio>
 
@@ -281,7 +280,8 @@ body{
     <div class="lbl">WHO</div>
     <img src="Photo.png" alt="Sahebjit" class="who-photo">
     <h1 class="who-name">Sahebjit Singh Chhabra</h1>
-    <p class="who-tag">I'm me.</p>
+    <p class="who-tag">I can't be put in a box... except this one.</p>
+    <p class="who-tag">Head of Operations & Finance. Creator. CS grad.</p>
   </div>
   <div class="ice-overlay" data-i="0" data-lbl="WHO"></div>
 </section>
@@ -341,6 +341,7 @@ body{
       <li class="ach-item"><span class="ach-n">05</span><span class="ach-t">INSPIRE Scholar — top 1%, Delhi</span></li>
       <li class="ach-item"><span class="ach-n">06</span><span class="ach-t">McKinsey Forward Program</span></li>
       <li class="ach-item"><span class="ach-n">07</span><span class="ach-t">ACT 33/36 — perfect Math score</span></li>
+      <li class="ach-item"><span class="ach-n">08</span><span class="ach-t">Rang De Basanti edit — actor Atul Kulkarni turned it into a collaboration (100K+ views)</span></li>
     </ul>
   </div>
   <div class="ice-overlay" data-i="3" data-lbl="ACHIEVEMENTS"></div>
@@ -367,6 +368,7 @@ body{
         <span class="link-type">email</span><span class="link-val">saheb.chh@gmail.com</span>
       </a>
     </div>
+    <a class="link-row" href="resume.pdf" target="_blank" rel="noopener" style="margin-top:8px"><span class="link-type">resume</span><span class="link-val">download ↓</span></a>
   </div>
   <div class="ice-overlay" data-i="4" data-lbl="FIND ME"></div>
 </section>
@@ -397,13 +399,21 @@ function playAudioFromStart() {
 }
 
 window.addEventListener('load', () => { audioMain.play().catch(() => {}); });
+let audioStarted=false;
+document.addEventListener('click',function(){if(!audioStarted){audioStarted=true;audioMain.play().catch(()=>{});}},{once:true});
 
 /* PROGRESS */
 let broken = 0;
 const prog = document.getElementById('prog');
+function setResetBtn() {
+  var btn = document.getElementById('nuke');
+  btn.innerHTML = '🔄 RESET<br><span style="font-size:10px;opacity:0.5;letter-spacing:0.15em">start over</span>';
+  btn.onclick = function() { location.reload(); };
+}
 function tick() {
   broken++;
   prog.style.width = (broken * 20) + '%';
+  if (broken >= 5) { setResetBtn(); }
 }
 
 /* DRAW ICE */
@@ -428,19 +438,28 @@ function drawIce(canvas, label) {
     ctx.fillRect(0, 0, w, h);
   }
 
-  for (let i = 0; i < 32; i++) {
-    ctx.strokeStyle = 'rgba(190,232,255,' + (0.18 + Math.random() * 0.28) + ')';
-    ctx.lineWidth = 0.4 + Math.random() * 0.9;
+  for (let i = 0; i < 55; i++) {
+    ctx.strokeStyle = 'rgba(190,232,255,' + (0.12 + Math.random() * 0.33) + ')';
+    ctx.lineWidth = 0.3 + Math.random() * 1.9;
     ctx.beginPath();
     let px = Math.random() * w, py = Math.random() * h;
     ctx.moveTo(px, py);
-    const segs = 1 + Math.floor(Math.random() * 4);
+    const segs = 2 + Math.floor(Math.random() * 6);
     for (let s = 0; s < segs; s++) {
       px += (Math.random() - 0.5) * 90;
       py += (Math.random() - 0.5) * 90;
       ctx.lineTo(px, py);
     }
     ctx.stroke();
+  }
+
+  for (let i = 0; i < 200; i++) {
+    ctx.fillStyle = 'rgba(220,244,255,' + (0.03 + Math.random() * 0.04) + ')';
+    const dx = Math.random() * w, dy = Math.random() * h;
+    const dr = 0.5 + Math.random() * 1.2;
+    ctx.beginPath();
+    ctx.arc(dx, dy, dr, 0, Math.PI * 2);
+    ctx.fill();
   }
 
   const sheen = ctx.createLinearGradient(0, 0, 0, h * 0.28);
@@ -617,8 +636,9 @@ function initOverlay(overlay) {
   overlay.addEventListener('click', function(e) {
     if (!overlay._frozen) return;
     const idx = overlay.dataset.i;
-    if (idx === '0') { audioOffbeat.currentTime = 0; audioOffbeat.play().catch(() => {}); }
-    else if (idx === '1') { audioViral.currentTime = 0; audioViral.play().catch(() => {}); }
+    if (idx==='0'||idx==='3'){audioMain.currentTime=0;audioMain.play().catch(()=>{});}
+    else if(idx==='1'||idx==='4'){audioOffbeat.currentTime=0;audioOffbeat.play().catch(()=>{});}
+    else if(idx==='2'){audioViral.currentTime=0;audioViral.play().catch(()=>{});}
     breakIt(e.clientX, e.clientY);
   });
 }
@@ -632,6 +652,7 @@ document.getElementById('nuke').addEventListener('click', function() {
     const rect = ov.getBoundingClientRect();
     ov._breakIt(rect.left + rect.width / 2, rect.top + rect.height / 2);
   });
+  setTimeout(function() { if (broken >= 5) { setResetBtn(); } }, 200);
 });
 
 document.fonts.ready.then(function() {
