@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahebjit karta kya hai?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --ice:rgba(110,185,235,1);
+  --ice4:rgba(110,185,235,0.4);
+  --ice2:rgba(110,185,235,0.2);
+  --text:#e8e8e8;
+  --muted:rgba(255,255,255,0.55);
+  --bg:#080808;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  cursor:none;
+  overflow-x:hidden;
+}
+
+/* CURSOR */
+#cursor{
+  position:fixed;top:0;left:0;
+  font-size:40px;line-height:1;
+  pointer-events:none;
+  z-index:99999;
+  transform:translate(-40%,-60%);
+  transition:transform 0.07s ease;
+  user-select:none;
+  will-change:left,top;
+}
+#cursor.smash{transform:translate(-40%,-60%) scale(0.72) rotate(-28deg)}
+
+/* PROGRESS */
+#prog{
+  position:fixed;top:0;left:0;height:2px;width:0%;
+  background:linear-gradient(90deg,
+    rgba(110,185,235,0.6) 0%,
+    rgba(210,242,255,1) 50%,
+    rgba(110,185,235,0.6) 100%);
+  box-shadow:0 0 10px rgba(110,185,235,0.5);
+  z-index:9000;
+  transition:width 0.75s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+/* NUKE BUTTON */
+#nuke{
+  position:fixed;bottom:28px;left:50%;
+  transform:translateX(-50%);
+  border:2px solid rgba(255,70,20,0.95);
+  color:rgba(255,150,70,1);
+  font-family:'Space Mono',monospace;
+  font-size:15px;letter-spacing:0.22em;
+  text-transform:uppercase;
+  padding:16px 44px;
+  cursor:none;z-index:9999;
+  white-space:nowrap;
+  animation:nuke-idle 1.6s ease-in-out infinite;
+  transition:border-color 0.2s, color 0.2s, transform 0.2s;
+}
+#nuke:hover{
+  border-color:rgba(255,90,30,1);
+  color:#fff;
+  animation:none;
+  transform:translateX(-50%) scale(1.07);
+  box-shadow:
+    0 0 30px rgba(255,70,20,1),
+    0 0 70px rgba(255,50,10,0.75),
+    0 0 130px rgba(255,40,0,0.5),
+    0 0 200px rgba(255,20,0,0.25),
+    inset 0 0 32px rgba(255,60,20,0.28);
+  background:rgba(40,6,2,0.97);
+}
+@keyframes nuke-idle{
+  0%,100%{
+    background:rgba(10,2,2,0.96);
+    box-shadow:
+      0 0 18px rgba(255,70,20,0.6),
+      0 0 45px rgba(255,50,10,0.32),
+      0 0 90px rgba(255,40,0,0.15),
+      inset 0 0 18px rgba(255,50,10,0.12);
+  }
+  50%{
+    background:rgba(36,5,2,0.97);
+    box-shadow:
+      0 0 40px rgba(255,70,20,1),
+      0 0 90px rgba(255,50,10,0.7),
+      0 0 160px rgba(255,40,0,0.42),
+      0 0 240px rgba(255,20,0,0.18),
+      inset 0 0 36px rgba(255,60,20,0.28);
+  }
+}
+
+/* RESUME BUTTON */
+#resume-btn{
+  position:fixed;bottom:28px;right:24px;
+  font-family:'Space Mono',monospace;
+  font-size:11px;letter-spacing:0.18em;
+  color:rgba(110,185,235,0.65);
+  border:1px solid rgba(110,185,235,0.28);
+  padding:10px 18px;
+  text-decoration:none;
+  z-index:9999;
+  cursor:none;
+  transition:color 0.2s, border-color 0.2s;
+}
+#resume-btn:hover{
+  color:rgba(110,185,235,1);
+  border-color:rgba(110,185,235,0.7);
+}
+
+/* PAGE HEADING */
+#page-heading{
+  position:fixed;top:18px;left:50%;
+  transform:translateX(-50%);
+  font-family:'Space Mono',monospace;
+  font-size:10px;letter-spacing:0.3em;
+  color:rgba(255,255,255,0.48);
+  z-index:100;pointer-events:none;
+  white-space:nowrap;
+}
+
+/* BREAKING THE ICE */
+#breaking-ice{
+  position:fixed;top:18px;left:20px;
+  font-family:'Space Mono',monospace;
+  font-size:10px;letter-spacing:0.25em;
+  color:rgba(255,255,255,0.35);
+  z-index:100;pointer-events:none;
+  text-transform:lowercase;
+}
+
+/* GRID */
+.cards-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:10px;
+  max-width:1080px;
+  margin:0 auto;
+  padding:52px 24px 40px;
+  min-height:100vh;
+  align-content:center;
+}
+
+/* PANEL (card) */
+.panel{
+  position:relative;
+  background:rgba(255,255,255,0.025);
+  border:1px solid rgba(255,255,255,0.055);
+}
+#p0{grid-column:1;grid-row:1}
+#p1{grid-column:2/4;grid-row:1}
+#p2{grid-column:1;grid-row:2}
+#p3{grid-column:2;grid-row:2}
+#p4{grid-column:3;grid-row:2}
+
+.panel-content{
+  padding:24px;
+  opacity:0;transform:translateY(6px);
+  transition:opacity 0.55s ease 0.15s,transform 0.55s ease 0.15s;
+}
+.panel.revealed .panel-content{opacity:1;transform:translateY(0)}
+
+.lbl{
+  font-family:'Space Mono',monospace;
+  font-size:9px;letter-spacing:0.38em;
+  color:var(--ice4);
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+
+/* ICE OVERLAY */
+.ice-overlay{
+  position:absolute;inset:0;
+  z-index:10;cursor:none;
+  overflow:visible;
+}
+.ice-overlay canvas{
+  position:absolute;left:0;top:0;display:block;
+}
+
+/* WHO */
+.who-photo{
+  width:56px;height:56px;border-radius:50%;
+  object-fit:cover;
+  border:1.5px solid var(--ice2);
+  display:block;margin-bottom:14px;
+}
+.who-name{
+  font-size:clamp(18px,1.85vw,26px);
+  font-weight:500;letter-spacing:-0.02em;
+  color:#f2f2f2;line-height:1.2;margin-bottom:8px;
+}
+.who-tag{font-size:14px;color:var(--muted);font-weight:300;font-style:italic}
+
+/* WORK */
+.work-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.work-card{border-left:1px solid var(--ice2);padding-left:16px}
+.work-name{font-size:15px;font-weight:500;color:#e8e8e8;margin-bottom:6px}
+.work-sub{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.tag{
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:rgba(110,185,235,1);
+  border:1px solid rgba(110,185,235,0.35);
+  padding:2px 7px;border-radius:2px;
+}
+.work-link{
+  font-family:'Space Mono',monospace;font-size:10px;
+  color:rgba(110,185,235,1);
+  text-decoration:none;
+  border-bottom:1px solid rgba(110,185,235,0.45);
+  padding-bottom:1px;transition:color 0.2s;
+}
+.work-link:hover{color:rgba(110,185,235,1)}
+
+/* NUMBERS */
+.nums{display:grid;grid-template-columns:1fr;gap:16px}
+.num-v{
+  font-family:'Space Mono',monospace;
+  font-size:clamp(24px,2.6vw,36px);font-weight:700;
+  color:rgba(110,185,235,1);line-height:1;margin-bottom:4px;
+}
+.num-l{font-size:11px;color:var(--muted);font-weight:300;line-height:1.4}
+
+/* ACHIEVEMENTS */
+.ach-list{list-style:none;display:grid;gap:12px}
+.ach-item{display:flex;align-items:baseline;gap:12px}
+.ach-n{
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:rgba(110,185,235,0.6);flex-shrink:0;width:18px;
+}
+.ach-t{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.5}
+
+/* FIND ME */
+.links{display:grid;gap:12px}
+.link-row{display:flex;align-items:center;gap:12px;text-decoration:none}
+.link-type{
+  font-family:'Space Mono',monospace;font-size:9px;
+  color:rgba(110,185,235,0.6);width:50px;flex-shrink:0;
+}
+.link-val{font-size:13px;color:rgba(255,255,255,0.85);font-weight:300;transition:color 0.2s}
+.link-row:hover .link-val{color:rgba(110,185,235,1)}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .cards-grid{grid-template-columns:1fr;padding:40px 16px}
+  #p0,#p1,#p2,#p3,#p4{grid-column:1;grid-row:auto}
+  .work-grid{grid-template-columns:1fr;gap:20px}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor">⛏️</div>
+<div id="prog"></div>
+<div id="breaking-ice">breaking the ice</div>
+<button id="nuke">🔥 PRESS IF YOU'RE OFFBEAT TOO</button>
+<a id="resume-btn" href="resume.pdf" target="_blank" rel="noopener">resume ↓</a>
+<audio id="audio-main" src="Nachde Ne Saare.m4a" loop></audio>
+<audio id="audio-offbeat" src="offbeat 2nd.m4a"></audio>
+<audio id="audio-viral" src="viral tweet.m4a"></audio>
+
+<div id="page-heading">Sahebjit karta kya hai?</div>
+<div class="cards-grid">
+
+<!-- 0 · WHO -->
+<section class="panel" id="p0">
+  <div class="panel-content">
+    <div class="lbl">WHO</div>
+    <img src="Photo.png" alt="Sahebjit" class="who-photo">
+    <h1 class="who-name">Sahebjit Singh Chhabra</h1>
+    <p class="who-tag">I'm me.</p>
+  </div>
+  <div class="ice-overlay" data-i="0" data-lbl="WHO"></div>
+</section>
+
+<!-- 1 · WORK -->
+<section class="panel" id="p1">
+  <div class="panel-content">
+    <div class="lbl">WORK</div>
+    <div class="work-grid">
+      <div class="work-card">
+        <div class="work-name">IJS Electronics</div>
+        <p class="work-sub">Emergency warning systems for India's most critical convoys and agencies.</p>
+        <div class="tags">
+          <span class="tag">President's Escort Fleet</span>
+          <span class="tag">PM Convoy</span>
+          <span class="tag">IAF</span>
+          <span class="tag">NSG</span>
+          <span class="tag">13+ Police Forces</span>
+          <span class="tag">OEM Maruti</span>
+          <span class="tag">40% Turnover</span>
+          <span class="tag">SQL Forecasting</span>
+          <span class="tag">30% Delay Reduction</span>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-name">lostintrovert</div>
+        <p class="work-sub">Creator. 8.3M+ views. Made a Rang De Basanti edit that actor Atul Kulkarni turned into a collaboration.</p>
+        <a class="work-link" href="https://youtu.be/FsPRKPPkZWc" target="_blank" rel="noopener">youtu.be/FsPRKPPkZWc →</a>
+      </div>
+    </div>
+  </div>
+  <div class="ice-overlay" data-i="1" data-lbl="WORK"></div>
+</section>
+
+<!-- 2 · NUMBERS -->
+<section class="panel" id="p2">
+  <div class="panel-content">
+    <div class="lbl">NUMBERS</div>
+    <div class="nums">
+      <div><div class="num-v">8.3M</div><div class="num-l">total views</div></div>
+      <div><div class="num-v">40%</div><div class="num-l">turnover increase</div></div>
+      <div><div class="num-v">13+</div><div class="num-l">state police forces</div></div>
+    </div>
+  </div>
+  <div class="ice-overlay" data-i="2" data-lbl="NUMBERS"></div>
+</section>
+
+<!-- 3 · ACHIEVEMENTS -->
+<section class="panel" id="p3">
+  <div class="panel-content">
+    <div class="lbl">ACHIEVEMENTS</div>
+    <ul class="ach-list">
+      <li class="ach-item"><span class="ach-n">01</span><span class="ach-t">World Topper — Cambridge AS Mathematics (Times of India)</span></li>
+      <li class="ach-item"><span class="ach-n">02</span><span class="ach-t">Rank 1 of 5241 — Decryptonite</span></li>
+      <li class="ach-item"><span class="ach-n">03</span><span class="ach-t">1st Place — Digital Imaging Cofas Olympiad</span></li>
+      <li class="ach-item"><span class="ach-n">04</span><span class="ach-t">Google Office Visit — 1 of 90 selected</span></li>
+      <li class="ach-item"><span class="ach-n">05</span><span class="ach-t">INSPIRE Scholar — top 1%, Delhi</span></li>
+      <li class="ach-item"><span class="ach-n">06</span><span class="ach-t">McKinsey Forward Program</span></li>
+      <li class="ach-item"><span class="ach-n">07</span><span class="ach-t">ACT 33/36 — perfect Math score</span></li>
+    </ul>
+  </div>
+  <div class="ice-overlay" data-i="3" data-lbl="ACHIEVEMENTS"></div>
+</section>
+
+<!-- 4 · FIND ME -->
+<section class="panel" id="p4">
+  <div class="panel-content">
+    <div class="lbl">FIND ME</div>
+    <div class="links">
+      <a class="link-row" href="https://linkedin.com/in/sahebjitchhabra" target="_blank" rel="noopener">
+        <span class="link-type">linkedin</span><span class="link-val">linkedin.com/in/sahebjitchhabra</span>
+      </a>
+      <a class="link-row" href="https://lostintrovert.com" target="_blank" rel="noopener">
+        <span class="link-type">site</span><span class="link-val">lostintrovert.com</span>
+      </a>
+      <a class="link-row" href="https://youtube.com/@sahebjitchhabra" target="_blank" rel="noopener">
+        <span class="link-type">youtube</span><span class="link-val">youtube.com/@sahebjitchhabra</span>
+      </a>
+      <a class="link-row" href="https://grandwarninglights.in" target="_blank" rel="noopener">
+        <span class="link-type">company</span><span class="link-val">grandwarninglights.in</span>
+      </a>
+      <a class="link-row" href="mailto:saheb.chh@gmail.com">
+        <span class="link-type">email</span><span class="link-val">saheb.chh@gmail.com</span>
+      </a>
+    </div>
+  </div>
+  <div class="ice-overlay" data-i="4" data-lbl="FIND ME"></div>
+</section>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* CURSOR */
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+});
+document.addEventListener('mousedown', () => cursor.classList.add('smash'));
+document.addEventListener('mouseup',   () => cursor.classList.remove('smash'));
+
+/* AUDIO */
+const audioMain    = document.getElementById('audio-main');
+const audioOffbeat = document.getElementById('audio-offbeat');
+const audioViral   = document.getElementById('audio-viral');
+
+function playAudioFromStart() {
+  audioMain.currentTime = 0;
+  audioMain.play().catch(() => {});
+}
+
+window.addEventListener('load', () => { audioMain.play().catch(() => {}); });
+
+/* PROGRESS */
+let broken = 0;
+const prog = document.getElementById('prog');
+function tick() {
+  broken++;
+  prog.style.width = (broken * 20) + '%';
+}
+
+/* DRAW ICE */
+function drawIce(canvas, label) {
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+
+  const bg = ctx.createLinearGradient(0, 0, w * 0.7, h);
+  bg.addColorStop(0,    'rgba(108,182,234,0.87)');
+  bg.addColorStop(0.45, 'rgba(138,206,253,0.81)');
+  bg.addColorStop(1,    'rgba(90,158,218,0.89)');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, w, h);
+
+  for (let i = 0; i < 10; i++) {
+    const gx = Math.random() * w, gy = Math.random() * h;
+    const gr = 40 + Math.random() * 110;
+    const grd = ctx.createRadialGradient(gx, gy, 0, gx, gy, gr);
+    grd.addColorStop(0, 'rgba(225,248,255,0.18)');
+    grd.addColorStop(1, 'rgba(225,248,255,0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  for (let i = 0; i < 32; i++) {
+    ctx.strokeStyle = 'rgba(190,232,255,' + (0.18 + Math.random() * 0.28) + ')';
+    ctx.lineWidth = 0.4 + Math.random() * 0.9;
+    ctx.beginPath();
+    let px = Math.random() * w, py = Math.random() * h;
+    ctx.moveTo(px, py);
+    const segs = 1 + Math.floor(Math.random() * 4);
+    for (let s = 0; s < segs; s++) {
+      px += (Math.random() - 0.5) * 90;
+      py += (Math.random() - 0.5) * 90;
+      ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+  }
+
+  const sheen = ctx.createLinearGradient(0, 0, 0, h * 0.28);
+  sheen.addColorStop(0, 'rgba(255,255,255,0.15)');
+  sheen.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = sheen;
+  ctx.fillRect(0, 0, w, h);
+
+  if (label) {
+    ctx.save();
+    ctx.globalAlpha = 0.06;
+    ctx.fillStyle = '#fff';
+    const fs = Math.min(w / label.length * 1.6, 82);
+    ctx.font = 'bold ' + fs + 'px "DM Sans", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, w / 2, h / 2 - 14);
+    ctx.restore();
+  }
+
+  ctx.fillStyle = 'rgba(255,255,255,0.28)';
+  ctx.font = '11px "Space Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('CLICK TO BREAK', w / 2, h / 2 + (label ? 26 : 0));
+}
+
+/* TESSELLATION */
+function makeTessellation(w, h) {
+  const cols = 9 + Math.floor(Math.random() * 3);
+  const rows = 6 + Math.floor(Math.random() * 2);
+  const pts = [];
+
+  for (let r = 0; r <= rows; r++) {
+    const row = [];
+    for (let c = 0; c <= cols; c++) {
+      const bx = (c / cols) * w;
+      const by = (r / rows) * h;
+      const edge = c === 0 || c === cols || r === 0 || r === rows;
+      const jx = edge ? 0 : (Math.random() - 0.5) * (w / cols) * 0.55;
+      const jy = edge ? 0 : (Math.random() - 0.5) * (h / rows) * 0.55;
+      row.push([
+        Math.max(0, Math.min(w, bx + jx)),
+        Math.max(0, Math.min(h, by + jy))
+      ]);
+    }
+    pts.push(row);
+  }
+
+  const shards = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const tl = pts[r][c],   tr = pts[r][c+1];
+      const bl = pts[r+1][c], br = pts[r+1][c+1];
+      if (Math.random() > 0.42) {
+        shards.push([tl, tr, br]);
+        shards.push([tl, br, bl]);
+      } else {
+        shards.push([tl, tr, br, bl]);
+      }
+    }
+  }
+  return shards;
+}
+
+/* BURST PARTICLES */
+function burst(x, y) {
+  for (let i = 0; i < 28; i++) {
+    const el = document.createElement('div');
+    const ang = (i / 28) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+    const spd = 50 + Math.random() * 85;
+    const sz  = 2 + Math.random() * 5;
+    el.style.cssText =
+      'position:fixed;width:' + sz + 'px;height:' + sz + 'px;' +
+      'background:' + (Math.random() > 0.5 ? 'rgba(110,185,235,0.9)' : 'rgba(208,242,255,0.85)') + ';' +
+      'border-radius:' + (Math.random() > 0.55 ? '50%' : '1px') + ';' +
+      'left:' + x + 'px;top:' + y + 'px;' +
+      'pointer-events:none;z-index:99997;';
+    document.body.appendChild(el);
+    const tx = Math.cos(ang) * spd, ty = Math.sin(ang) * spd;
+    el.animate([
+      { transform:'translate(-50%,-50%) scale(1)', opacity:0.9 },
+      { transform:'translate(calc(-50% + ' + tx + 'px),calc(-50% + ' + ty + 'px)) scale(0)', opacity:0 }
+    ], {
+      duration: 360 + Math.random() * 340,
+      easing:'cubic-bezier(0.2,0.85,0.4,1)',
+      fill:'forwards'
+    }).onfinish = () => el.remove();
+  }
+}
+
+/* SHATTER */
+function shatter(overlay, cx, cy) {
+  const canvas = overlay.querySelector('canvas');
+  if (!canvas) return;
+  const w = canvas.width, h = canvas.height;
+  const shards = makeTessellation(w, h);
+  canvas.remove();
+
+  shards.forEach(function(poly) {
+    const sx = poly.reduce((s,p) => s + p[0], 0) / poly.length;
+    const sy = poly.reduce((s,p) => s + p[1], 0) / poly.length;
+    const dx = sx - cx, dy = sy - cy;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const ang = Math.atan2(dy, dx);
+    const force = 90 + 650 / (dist * 0.22 + 1);
+    const tx = Math.cos(ang) * force;
+    const ty = Math.sin(ang) * force;
+    const rot = (Math.random() - 0.5) * 580;
+    const delay = Math.min(dist * 0.35, 110);
+    const dur = 480 + Math.random() * 260;
+
+    const el = document.createElement('div');
+    el.style.cssText =
+      'position:absolute;left:0;top:0;' +
+      'width:' + w + 'px;height:' + h + 'px;' +
+      'clip-path:polygon(' + poly.map(p => p[0] + 'px ' + p[1] + 'px').join(',') + ');' +
+      'background:linear-gradient(135deg,rgba(132,202,255,0.88),rgba(98,168,228,0.83));' +
+      'transform-origin:' + sx + 'px ' + sy + 'px;' +
+      'pointer-events:none;will-change:transform,opacity;';
+    overlay.appendChild(el);
+
+    el.animate([
+      { transform:'translate(0,0) rotate(0deg)', opacity:0.88 },
+      { transform:'translate(' + tx + 'px,' + ty + 'px) rotate(' + rot + 'deg)', opacity:0 }
+    ], { duration:dur, delay:delay, easing:'cubic-bezier(0.2,0.9,0.3,1)', fill:'forwards' });
+  });
+
+  setTimeout(() => overlay.remove(), 1350);
+}
+
+/* INIT */
+function initOverlay(overlay) {
+  const section = overlay.parentElement;
+  const label = overlay.dataset.lbl || '';
+  overlay._frozen = true;
+
+  function build() {
+    const old = overlay.querySelector('canvas');
+    if (old) old.remove();
+    const w = section.offsetWidth;
+    const h = section.offsetHeight;
+    if (!w || !h) return;
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    c.style.cssText = 'position:absolute;left:0;top:0;width:' + w + 'px;height:' + h + 'px;';
+    overlay.appendChild(c);
+    drawIce(c, label);
+  }
+
+  build();
+
+  const onResize = function() {
+    clearTimeout(overlay._rt);
+    overlay._rt = setTimeout(function() {
+      if (document.contains(overlay)) build();
+    }, 200);
+  };
+  window.addEventListener('resize', onResize);
+
+  function breakIt(clientX, clientY) {
+    if (!overlay._frozen) return;
+    overlay._frozen = false;
+    window.removeEventListener('resize', onResize);
+    const rect = overlay.getBoundingClientRect();
+    burst(clientX, clientY);
+    shatter(overlay, clientX - rect.left, clientY - rect.top);
+    tick();
+    section.classList.add('revealed');
+  }
+
+  overlay._breakIt = breakIt;
+
+  overlay.addEventListener('click', function(e) {
+    if (!overlay._frozen) return;
+    const idx = overlay.dataset.i;
+    if (idx === '0') { audioOffbeat.currentTime = 0; audioOffbeat.play().catch(() => {}); }
+    else if (idx === '1') { audioViral.currentTime = 0; audioViral.play().catch(() => {}); }
+    breakIt(e.clientX, e.clientY);
+  });
+}
+
+/* NUKE */
+document.getElementById('nuke').addEventListener('click', function() {
+  const frozen = Array.from(document.querySelectorAll('.ice-overlay')).filter(o => o._frozen);
+  if (!frozen.length) return;
+  playAudioFromStart();
+  frozen.forEach(function(ov) {
+    const rect = ov.getBoundingClientRect();
+    ov._breakIt(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  });
+});
+
+document.fonts.ready.then(function() {
+  document.querySelectorAll('.ice-overlay').forEach(initOverlay);
+});
+
+})();
+</script>
+</body>
+</html>
