@@ -59,18 +59,20 @@ body{
 
 /* NUKE BUTTON */
 #nuke{
-  position:fixed;bottom:16px;left:50%;
+  position:fixed;bottom:10px;left:50%;
   transform:translateX(-50%);
   border:2px solid rgba(255,70,20,0.95);
   color:rgba(255,150,70,1);
   font-family:'Space Mono',monospace;
-  font-size:15px;letter-spacing:0.22em;
+  font-size:14px;letter-spacing:0.18em;
   text-transform:uppercase;
-  padding:16px 44px;
+  padding:14px 34px;
   cursor:none;z-index:9999;
   white-space:nowrap;
   animation:nuke-idle 1.6s ease-in-out infinite;
   transition:border-color 0.2s, color 0.2s, transform 0.2s;
+  max-width:min(92vw,560px);
+  text-align:center;
 }
 #nuke:hover{
   border-color:rgba(255,90,30,1);
@@ -152,16 +154,21 @@ body{
   gap:12px;
   max-width:1080px;
   margin:0 auto;
-  padding:58px 24px 88px;
-  height:100vh;
+  padding:58px 24px 146px;
+  min-height:100vh;
   align-content:stretch;
 }
 
 /* PANEL (card) */
 .panel{
   position:relative;
-  background:rgba(255,255,255,0.025);
-  border:1px solid rgba(255,255,255,0.055);
+  background:
+    linear-gradient(180deg,rgba(14,18,24,0.94),rgba(8,10,14,0.98)),
+    rgba(10,10,10,0.96);
+  border:1px solid rgba(255,255,255,0.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 14px 30px rgba(0,0,0,0.18);
   perspective:1200px;
 }
 #p0{grid-column:1;grid-row:1}
@@ -178,6 +185,13 @@ body{
   overflow:auto;
 }
 .panel.revealed .panel-content{opacity:1;transform:translateY(0)}
+
+#p3 .panel-content,
+#p4 .panel-content{
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
 
 .lbl{
   font-family:'Space Mono',monospace;
@@ -262,6 +276,39 @@ body{
   opacity:0.72;
   transform:translateZ(16px);
 }
+.ice-title{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) translateY(-18px);
+  font-family:"DM Sans",sans-serif;
+  font-weight:700;
+  line-height:0.95;
+  letter-spacing:-0.04em;
+  color:rgba(252,254,255,0.34);
+  text-shadow:
+    0 0 28px rgba(255,255,255,0.16),
+    0 1px 0 rgba(255,255,255,0.12);
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+}
+.ice-cta{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) translateY(30px);
+  font-family:"Space Mono",monospace;
+  font-size:13px;
+  color:rgba(249,253,255,0.82);
+  text-shadow:
+    0 0 12px rgba(255,255,255,0.08);
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  pointer-events:none;
+  user-select:none;
+  white-space:nowrap;
+}
 .ice-photo{
   position:absolute;inset:-2%;
   pointer-events:none;
@@ -271,24 +318,6 @@ body{
   opacity:0.9;
   filter:saturate(0.92) contrast(1.04) brightness(1.02);
   transform:translateZ(6px) scale(1.03);
-}
-.ice-blocks{
-  position:absolute;inset:0;
-  pointer-events:none;
-  background-size:cover;
-  background-repeat:no-repeat;
-  mix-blend-mode:normal;
-  opacity:0.18;
-  transform:translateZ(8px);
-}
-.ice-block-depth{
-  position:absolute;inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.03) 15%,rgba(130,192,235,0.05) 42%,rgba(72,133,186,0.18) 100%),
-    linear-gradient(90deg,rgba(236,248,255,0.05) 0%,rgba(236,248,255,0) 18%,rgba(67,127,179,0.12) 100%);
-  opacity:0.62;
-  transform:translateZ(-2px);
 }
 .ice-edge-frost{
   position:absolute;inset:0;
@@ -322,22 +351,6 @@ body{
     radial-gradient(ellipse at 50% 0%,rgba(255,255,255,0.18),rgba(255,255,255,0) 72%);
   opacity:0.62;
   transform:translateZ(18px);
-}
-.ice-cracks{
-  position:absolute;inset:0;
-  pointer-events:none;
-  opacity:0.08;
-  mix-blend-mode:normal;
-  transform:translateZ(18px);
-}
-.ice-inclusions{
-  position:absolute;inset:0;
-  pointer-events:none;
-  opacity:0.1;
-  background-size:cover;
-  background-repeat:no-repeat;
-  mix-blend-mode:screen;
-  transform:translateZ(10px);
 }
 .ice-depth{
   position:absolute;inset:0;
@@ -424,13 +437,93 @@ body{
 .link-val{font-size:12px;color:rgba(255,255,255,0.85);font-weight:300;transition:color 0.2s}
 .link-row:hover .link-val{color:rgba(110,185,235,1)}
 
+#p4 .links{
+  margin-top:auto;
+  margin-bottom:auto;
+}
+
+#p4 .panel-content > .link-row{
+  margin-top:auto;
+}
+
 /* RESPONSIVE */
 @media(max-width:700px){
-  body{overflow-y:auto}
-  .cards-grid{grid-template-columns:1fr;height:auto;padding:40px 16px 120px;grid-template-rows:none}
+  html,body{scroll-behavior:auto}
+  body{
+    cursor:auto;
+    overflow-y:auto;
+  }
+  #cursor{display:none}
+  #page-heading,
+  #breaking-ice{
+    position:static;
+    transform:none;
+    white-space:normal;
+  }
+  #breaking-ice{
+    padding:18px 16px 0;
+    font-size:11px;
+    letter-spacing:0.18em;
+  }
+  #page-heading{
+    padding:8px 16px 0;
+    text-align:center;
+    font-size:10px;
+    letter-spacing:0.18em;
+  }
+  #nuke{
+    bottom:max(10px, env(safe-area-inset-bottom));
+    font-size:11px;
+    letter-spacing:0.13em;
+    padding:12px 16px;
+    width:min(92vw,420px);
+    white-space:normal;
+    line-height:1.35;
+  }
+  .cards-grid{
+    grid-template-columns:1fr;
+    height:auto;
+    padding:18px 16px 118px;
+    grid-template-rows:none;
+    min-height:auto;
+  }
   #p0,#p1,#p2,#p3,#p4{grid-column:1;grid-row:auto}
-  .work-grid{grid-template-columns:1fr;gap:20px}
-  .panel-content{overflow:visible}
+  .panel{
+    min-height:220px;
+  }
+  #p3 .panel-content,
+  #p4 .panel-content{
+    display:block;
+    min-height:0;
+  }
+  .panel-content{
+    overflow:visible;
+    padding:16px;
+  }
+  .work-grid{grid-template-columns:1fr;gap:16px}
+  .nums{grid-template-columns:1fr;gap:10px}
+  .links{gap:8px}
+  .link-row{
+    align-items:flex-start;
+    gap:10px;
+  }
+  .link-type{
+    width:44px;
+  }
+  .link-val{
+    font-size:11px;
+    line-height:1.45;
+    word-break:break-word;
+  }
+  .ice-title{
+    transform:translate(-50%,-50%) translateY(-14px);
+  }
+  .ice-cta{
+    transform:translate(-50%,-50%) translateY(24px);
+    font-size:11px;
+    letter-spacing:0.16em;
+    padding:7px 10px;
+  }
 }
 </style>
 </head>
@@ -480,7 +573,7 @@ body{
       <div class="work-card">
         <div class="work-name">lostintrovert</div>
         <p class="work-sub">Creator. 8.3M+ views. Made a Rang De Basanti edit that actor Atul Kulkarni turned into a collaboration.</p>
-        <a class="work-link" href="https://youtu.be/FsPRKPPkZWc" target="_blank" rel="noopener">youtu.be/FsPRKPPkZWc →</a>
+        <a class="work-link" href="https://www.instagram.com/p/DRhlf2CDcfg/" target="_blank" rel="noopener">view collaboration →</a>
       </div>
     </div>
   </div>
@@ -567,6 +660,13 @@ const audioViral   = document.getElementById('audio-viral');
 function playAudioFromStart() {
   audioMain.currentTime = 0;
   audioMain.play().catch(() => {});
+}
+
+function playAllTracksFromStart() {
+  [audioMain, audioOffbeat, audioViral].forEach(function(audio) {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  });
 }
 
 window.addEventListener('load', () => { audioMain.play().catch(() => {}); });
@@ -710,143 +810,6 @@ function initOverlay(overlay) {
   overlay.style.setProperty('--rx', '0deg');
   overlay.style.setProperty('--ry', '0deg');
 
-  var noiseSvg = "<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='200' height='200' filter='url(#n)'/></svg>";
-  var noiseUrl = 'data:image/svg+xml;base64,' + btoa(noiseSvg);
-
-  function makeCrackSvg(width, height) {
-    const w = Math.max(220, Math.round(width));
-    const h = Math.max(180, Math.round(height));
-    const cx = w * (0.24 + Math.random() * 0.52);
-    const cy = h * (0.22 + Math.random() * 0.56);
-    const lines = [];
-
-    function branchPath(angle, length, bends, spread, startX, startY) {
-      let x = startX;
-      let y = startY;
-      let a = angle;
-      let d = 'M' + x.toFixed(1) + ' ' + y.toFixed(1);
-      for (let i = 0; i < bends; i++) {
-        const step = length / bends;
-        a += (Math.random() - 0.5) * spread;
-        x += Math.cos(a) * step;
-        y += Math.sin(a) * step;
-        d += ' L' + x.toFixed(1) + ' ' + y.toFixed(1);
-      }
-      return d;
-    }
-
-    const majorCount = 4 + Math.floor(Math.random() * 2);
-    for (let i = 0; i < majorCount; i++) {
-      const angle = (Math.PI * 2 * i / majorCount) + (Math.random() - 0.5) * 0.38;
-      const len = Math.min(w, h) * (0.14 + Math.random() * 0.24);
-      lines.push("<path d='" + branchPath(angle, len, 4 + Math.floor(Math.random() * 2), 0.28, cx, cy) + "' stroke='rgba(255,255,255,0.9)' stroke-width='" + (0.45 + Math.random() * 0.45).toFixed(2) + "' fill='none' stroke-linecap='round' opacity='" + (0.12 + Math.random() * 0.1).toFixed(2) + "'/>");
-
-      const childCount = Math.random() > 0.65 ? 1 : 0;
-      for (let j = 0; j < childCount; j++) {
-        const offset = len * (0.25 + Math.random() * 0.45);
-        const sx = cx + Math.cos(angle) * offset;
-        const sy = cy + Math.sin(angle) * offset;
-        const childAngle = angle + (Math.random() > 0.5 ? 1 : -1) * (0.35 + Math.random() * 0.6);
-        lines.push("<path d='" + branchPath(childAngle, len * (0.1 + Math.random() * 0.12), 2 + Math.floor(Math.random() * 2), 0.34, sx, sy) + "' stroke='rgba(220,242,255,0.86)' stroke-width='" + (0.28 + Math.random() * 0.26).toFixed(2) + "' fill='none' stroke-linecap='round' opacity='" + (0.08 + Math.random() * 0.06).toFixed(2) + "'/>");
-      }
-    }
-
-    return "data:image/svg+xml;base64," + btoa("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " + w + " " + h + "'>" + lines.join('') + "</svg>");
-  }
-
-  function makeInclusionSvg(width, height) {
-    const w = Math.max(220, Math.round(width));
-    const h = Math.max(180, Math.round(height));
-    const parts = [];
-
-    for (let i = 0; i < 7; i++) {
-      const cx = Math.round((0.14 + Math.random() * 0.72) * w);
-      const cy = Math.round((0.16 + Math.random() * 0.68) * h);
-      const rx = Math.round(16 + Math.random() * Math.max(18, w * 0.06));
-      const ry = Math.round(3 + Math.random() * Math.max(4, h * 0.018));
-      const rot = Math.round(Math.random() * 180);
-      const op = (0.03 + Math.random() * 0.04).toFixed(2);
-      parts.push("<ellipse cx='" + cx + "' cy='" + cy + "' rx='" + rx + "' ry='" + ry + "' fill='rgba(255,255,255," + op + ")' transform='rotate(" + rot + " " + cx + " " + cy + ")'/>");
-    }
-
-    for (let i = 0; i < 8; i++) {
-      const x1 = Math.round((0.1 + Math.random() * 0.8) * w);
-      const y1 = Math.round((0.1 + Math.random() * 0.8) * h);
-      const x2 = x1 + Math.round((Math.random() - 0.5) * w * 0.12);
-      const y2 = y1 + Math.round((Math.random() - 0.5) * h * 0.06);
-      const op = (0.02 + Math.random() * 0.04).toFixed(2);
-      const sw = (0.5 + Math.random() * 0.8).toFixed(2);
-      parts.push("<line x1='" + x1 + "' y1='" + y1 + "' x2='" + x2 + "' y2='" + y2 + "' stroke='rgba(225,242,255," + op + ")' stroke-width='" + sw + "' stroke-linecap='round'/>");
-    }
-
-    return "data:image/svg+xml;base64," + btoa("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " + w + " " + h + "'>" + parts.join('') + "</svg>");
-  }
-
-  function makeBlockSvg(width, height) {
-    const w = Math.max(220, Math.round(width));
-    const h = Math.max(180, Math.round(height));
-    const parts = [];
-
-    const bandCount = 3 + Math.floor(h / 220);
-    for (let i = 0; i < bandCount; i++) {
-      const y = ((i + 1) / (bandCount + 1)) * h + (Math.random() - 0.5) * h * 0.05;
-      const thickness = 0.8 + Math.random() * 1.2;
-      const op = (0.05 + Math.random() * 0.05).toFixed(2);
-      parts.push(
-        "<path d='M0 " + y.toFixed(1) + " C" + (w * 0.18).toFixed(1) + " " + (y - 4 - Math.random() * 12).toFixed(1) + "," +
-        (w * 0.52).toFixed(1) + " " + (y + (Math.random() - 0.5) * 18).toFixed(1) + "," +
-        w + " " + (y + 2 + Math.random() * 10).toFixed(1) +
-        "' stroke='rgba(226,243,255," + op + ")' stroke-width='" + thickness.toFixed(2) + "' fill='none' stroke-linecap='round'/>"
-      );
-    }
-
-    const planeCount = 3 + Math.floor(Math.random() * 3);
-    for (let i = 0; i < planeCount; i++) {
-      const x = Math.random() * w * 0.9;
-      const y = Math.random() * h * 0.88;
-      const pw = w * (0.12 + Math.random() * 0.22);
-      const ph = h * (0.03 + Math.random() * 0.07);
-      const skew = pw * (0.12 + Math.random() * 0.22);
-      const op = (0.025 + Math.random() * 0.04).toFixed(2);
-      const stroke = (0.04 + Math.random() * 0.04).toFixed(2);
-      const pts = [
-        [x, y],
-        [x + pw, y - ph * 0.18],
-        [x + pw - skew, y + ph],
-        [x - skew, y + ph * 0.84]
-      ];
-      parts.push(
-        "<polygon points='" + pts.map(function(p){ return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ") +
-        "' fill='rgba(214,240,255," + op + ")' stroke='rgba(255,255,255," + stroke + ")' stroke-width='0.8'/>"
-      );
-    }
-
-    const verticalCount = 2 + Math.floor(Math.random() * 2);
-    for (let i = 0; i < verticalCount; i++) {
-      const x = (0.12 + Math.random() * 0.76) * w;
-      const y1 = Math.random() * h * 0.18;
-      const y2 = h - Math.random() * h * 0.16;
-      const op = (0.025 + Math.random() * 0.03).toFixed(2);
-      parts.push(
-        "<line x1='" + x.toFixed(1) + "' y1='" + y1.toFixed(1) + "' x2='" + (x + (Math.random() - 0.5) * 12).toFixed(1) + "' y2='" + y2.toFixed(1) + "' stroke='rgba(255,255,255," + op + ")' stroke-width='" + (0.8 + Math.random() * 0.8).toFixed(2) + "' stroke-linecap='round'/>"
-      );
-    }
-
-    for (let i = 0; i < 2; i++) {
-      const cx = (0.18 + Math.random() * 0.64) * w;
-      const cy = (0.18 + Math.random() * 0.64) * h;
-      const rx = w * (0.07 + Math.random() * 0.12);
-      const ry = h * (0.025 + Math.random() * 0.05);
-      const rot = Math.random() * 180;
-      const op = (0.015 + Math.random() * 0.02).toFixed(2);
-      parts.push(
-        "<ellipse cx='" + cx.toFixed(1) + "' cy='" + cy.toFixed(1) + "' rx='" + rx.toFixed(1) + "' ry='" + ry.toFixed(1) + "' fill='rgba(255,255,255," + op + ")' transform='rotate(" + rot.toFixed(1) + " " + cx.toFixed(1) + " " + cy.toFixed(1) + ")'/>"
-      );
-    }
-
-    return "data:image/svg+xml;base64," + btoa("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " + w + " " + h + "'>" + parts.join('') + "</svg>");
-  }
-
   function build() {
     Array.from(overlay.children).forEach(function(c) { c.remove(); });
     overlay.style.background =
@@ -892,13 +855,14 @@ function initOverlay(overlay) {
     if (label) {
       var fs = Math.min((section.offsetWidth || 300) / label.length * 1.6, 82);
       var lblDiv = document.createElement('div');
-      lblDiv.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) translateY(-14px);font-family:"DM Sans",sans-serif;font-weight:700;font-size:' + Math.max(fs, 24) + 'px;color:rgba(255,255,255,0.09);text-shadow:0 0 18px rgba(255,255,255,0.04);white-space:nowrap;pointer-events:none;user-select:none;';
+      lblDiv.className = 'ice-title';
+      lblDiv.style.fontSize = Math.max(fs, 24) + 'px';
       lblDiv.textContent = label;
       overlay.appendChild(lblDiv);
     }
 
     var ctbDiv = document.createElement('div');
-    ctbDiv.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)' + (label ? ' translateY(26px)' : '') + ';font-family:"Space Mono",monospace;font-size:13px;color:rgba(249,253,255,0.82);text-shadow:0 0 12px rgba(255,255,255,0.08);letter-spacing:0.25em;text-transform:uppercase;pointer-events:none;user-select:none;white-space:nowrap;';
+    ctbDiv.className = 'ice-cta';
     ctbDiv.textContent = 'CLICK TO BREAK';
     overlay.appendChild(ctbDiv);
   }
@@ -963,7 +927,7 @@ function initOverlay(overlay) {
 document.getElementById('nuke').addEventListener('click', function() {
   const frozen = Array.from(document.querySelectorAll('.ice-overlay')).filter(o => o._frozen);
   if (!frozen.length) return;
-  playAudioFromStart();
+  playAllTracksFromStart();
   frozen.forEach(function(ov) {
     const rect = ov.getBoundingClientRect();
     ov._breakIt(rect.left + rect.width / 2, rect.top + rect.height / 2);
