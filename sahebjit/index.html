@@ -25,8 +25,8 @@
   --ice-milk:rgba(232,247,255,0.92);
   --ice-shadow:rgba(7,26,43,0.48);
   --text:#f2f2f2;
-  --muted:rgba(255,255,255,0.55);
-  --bg:#080808;
+  --muted:rgba(255,255,255,0.65);
+  --bg:#0f1923;
 }
 
 html{scroll-behavior:smooth}
@@ -152,6 +152,16 @@ body{
   white-space:nowrap;
 }
 
+/* BREAKING THE ICE */
+#breaking-ice{
+  position:fixed;top:18px;left:20px;
+  font-family:'Space Mono',monospace;
+  font-size:13px;letter-spacing:0.25em;
+  color:rgba(255,255,255,0.5);
+  z-index:100;pointer-events:none;
+  text-transform:lowercase;
+}
+
 /* GRID */
 .cards-grid{
   display:grid;
@@ -169,9 +179,9 @@ body{
 .panel{
   position:relative;
   background:
-    linear-gradient(180deg,rgba(14,18,24,0.94),rgba(8,10,14,0.98)),
+    linear-gradient(180deg,rgba(18,26,36,0.94),rgba(12,18,28,0.98)),
     rgba(10,10,10,0.96);
-  border:1px solid rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.04),
     0 14px 30px rgba(0,0,0,0.18);
@@ -187,12 +197,10 @@ body{
 
 .panel-content{
   padding:18px;
-  opacity:0;transform:translateY(6px);
-  transition:opacity 0.55s ease 0.15s,transform 0.55s ease 0.15s;
+  opacity:1;
   max-height:100%;
   overflow:auto;
 }
-.panel.revealed .panel-content{opacity:1;transform:translateY(0)}
 
 #p3 .panel-content,
 #p4 .panel-content{
@@ -281,7 +289,7 @@ body{
   background:
     linear-gradient(142deg,rgba(255,255,255,0.18) 0%,rgba(255,255,255,0.03) 18%,rgba(255,255,255,0) 34%),
     linear-gradient(325deg,rgba(126,198,245,0.08) 0%,rgba(126,198,245,0.02) 16%,rgba(126,198,245,0) 34%);
-  opacity:0.72;
+  opacity:0.42;
   transform:translateZ(16px);
 }
 .ice-title{
@@ -323,7 +331,7 @@ body{
   background-image:url("ice-texture.png");
   background-size:cover;
   background-repeat:no-repeat;
-  opacity:0.9;
+  opacity:0.62;
   filter:saturate(0.92) contrast(1.04) brightness(1.02);
   transform:translateZ(6px) scale(1.03);
 }
@@ -336,7 +344,7 @@ body{
     linear-gradient(90deg,rgba(244,252,255,0.24),rgba(244,252,255,0.05) 8%,rgba(244,252,255,0) 18%),
     linear-gradient(270deg,rgba(96,160,210,0.2),rgba(96,160,210,0.04) 10%,rgba(96,160,210,0) 22%);
   mix-blend-mode:normal;
-  opacity:0.82;
+  opacity:0.48;
   transform:translateZ(14px);
 }
 .ice-frost-cloud{
@@ -357,7 +365,7 @@ body{
   background:
     linear-gradient(180deg,rgba(248,252,255,0.28),rgba(248,252,255,0.08) 32%,rgba(248,252,255,0) 100%),
     radial-gradient(ellipse at 50% 0%,rgba(255,255,255,0.18),rgba(255,255,255,0) 72%);
-  opacity:0.62;
+  opacity:0.32;
   transform:translateZ(18px);
 }
 .ice-depth{
@@ -462,10 +470,16 @@ body{
     overflow-y:auto;
   }
   #cursor{display:none}
-  #page-heading{
+  #page-heading,
+  #breaking-ice{
     position:static;
     transform:none;
     white-space:normal;
+  }
+  #breaking-ice{
+    padding:18px 16px 0;
+    font-size:11px;
+    letter-spacing:0.18em;
   }
   #page-heading{
     padding:8px 16px 0;
@@ -545,6 +559,7 @@ body{
 
 <div id="cursor">⛏️</div>
 <div id="prog"></div>
+<div id="breaking-ice">breaking the ice</div>
 <button id="nuke">🔥 BREAK THE ICE<br><span style="font-size:10px;opacity:0.5;letter-spacing:0.15em;text-transform:lowercase">melts all ice</span></button>
 <audio id="audio-crack" src="ElevenLabs_Ice_breaks.mp3"></audio>
 <audio id="audio-freeze" src="ElevenLabs_Catastrophic_freeze_with_shattering_ice.mp3"></audio>
@@ -676,6 +691,8 @@ if (!IS_TOUCH_DEVICE) {
 /* AUDIO */
 const audioCrack = document.getElementById('audio-crack');
 const audioFreeze = document.getElementById('audio-freeze');
+audioCrack.volume = 0.4;
+audioFreeze.volume = 0.4;
 let breakCount = 0;
 
 function playBreakAudio() {
@@ -838,8 +855,8 @@ function initOverlay(overlay) {
     overlay.style.background =
       'linear-gradient(180deg,rgba(240,248,255,0.18),rgba(188,221,247,0.08) 44%,rgba(92,145,193,0.16) 100%),' +
       'rgba(158,205,238,0.12)';
-    overlay.style.backdropFilter = USE_LIGHTWEIGHT_EFFECTS ? 'none' : 'blur(4px) brightness(1.01) saturate(1.02)';
-    overlay.style.webkitBackdropFilter = USE_LIGHTWEIGHT_EFFECTS ? 'none' : 'blur(4px) brightness(1.01) saturate(1.02)';
+    overlay.style.backdropFilter = USE_LIGHTWEIGHT_EFFECTS ? 'none' : 'blur(2px) brightness(1.01) saturate(1.02)';
+    overlay.style.webkitBackdropFilter = USE_LIGHTWEIGHT_EFFECTS ? 'none' : 'blur(2px) brightness(1.01) saturate(1.02)';
 
     var photoDiv = document.createElement('div');
     photoDiv.className = 'ice-photo';
